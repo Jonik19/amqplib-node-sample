@@ -7,6 +7,8 @@ module.exports = function (io) {
 	io.on('connection', function (socket) {
 		winston.log('debug', 'Connected new user: ', socket.id);
 
+// This code may be organized as 'assertAndBindQueue' function wich invokes two first methods below
+// into q.all method, after that invokes third method 'bindQueue' in '.then()'
 		amqp.assertExchange(config.rabbitmq.exchange.socket, 'direct')
 		.then(function () {
 			amqp.assertQueue(socket.id)
